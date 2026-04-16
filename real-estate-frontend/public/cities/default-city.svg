@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f0f0f0"/>
+  <circle cx="200" cy="120" r="40" fill="#1f261e"/>
+  <rect x="160" y="160" width="80" height="60" fill="#ede5d8"/>
+  <text x="200" y="190" text-anchor="middle" fill="#1f261e" font-family="Arial, sans-serif" font-size="12">City</text>
+  <text x="200" y="210" text-anchor="middle" fill="#666" font-family="Arial, sans-serif" font-size="10">Placeholder</text>
+</svg>

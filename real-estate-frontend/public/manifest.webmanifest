@@ -1,0 +1,21 @@
+{
+  "name": "ZAD Hills Real Estate",
+  "short_name": "ZAD Hills",
+  "description": "Discover luxury real estate properties with premium investment opportunities",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ede5d8",
+  "theme_color": "#1f261e",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

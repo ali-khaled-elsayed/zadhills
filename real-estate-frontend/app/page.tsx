@@ -1,13 +1,15 @@
 import Image from 'next/image';
 import type { Blog, City, Developer, Project, Partner } from '@/types';
-import ProjectCard from '@/components/ProjectCard';
-import CityCard from '@/components/CityCard';
-import BlogCard from '@/components/BlogCard';
-import SearchFilters from '@/components/SearchFilters';
-import PartnersSection from '@/components/PartnersSection';
-import ContactForm from '@/components/ContactForm';
-import AnimatedCard from '@/components/AnimatedCard';
-import { homePageContent } from '@/data/homeStaticData';
+
+// import { homePageContent } from '@/data/homeStaticData';
+import ProjectCard from '../components/ProjectCard';
+import SearchFilters from '../components/SearchFilters';
+import AnimatedCard from '../components/AnimatedCard';
+import CityCard from '../components/CityCard';
+import PartnersSection from '../components/PartnersSection';
+import BlogCard from '../components/BlogCard';
+import ContactForm from '../components/ContactForm';
+import { homePageContent } from '../data/homeStaticData';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
 

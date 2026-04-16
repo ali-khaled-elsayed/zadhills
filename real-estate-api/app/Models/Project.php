@@ -50,7 +50,6 @@ class Project extends Model
         'gallery',
         'floor_plans',
         'views_count',
-        'sort_order',
         'meta',
     ];
 

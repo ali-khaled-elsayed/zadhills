@@ -1,14 +1,13 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import './globals.css';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: "ZAD Hills Real Estate",
   description: "Discover luxury real estate properties with premium investment opportunities, modern architecture, and trusted developers.",
   keywords: ["real estate", "properties", "apartments", "villas", "investment", "Egypt", "ZAD Hills"],
   authors: [{ name: "ZAD Hills" }],
-  themeColor: "#EDE5D8",
   metadataBase: new URL('https://example.com'),
   openGraph: {
     title: "ZAD Hills Real Estate",
@@ -23,6 +22,10 @@ export const metadata: Metadata = {
     apple: '/logo.svg',
   },
   manifest: '/manifest.webmanifest',
+};
+
+export const viewport: Viewport = {
+  themeColor: "#EDE5D8",
 };
 
 export default function RootLayout({

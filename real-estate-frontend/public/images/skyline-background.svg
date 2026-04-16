@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f261e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333333;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#skyGradient)"/>
+  <!-- Simple skyline silhouette -->
+  <path d="M0,300 L50,280 L100,320 L150,290 L200,310 L250,270 L300,330 L350,300 L400,280 L450,320 L500,290 L550,310 L600,270 L650,330 L700,300 L750,280 L800,320 L850,290 L900,310 L950,270 L1000,330 L1050,300 L1100,280 L1150,320 L1200,300 L1200,400 L0,400 Z" fill="#000"/>
+</svg>
