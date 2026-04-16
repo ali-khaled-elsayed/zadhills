@@ -1,0 +1,16 @@
+# Laravel
+real-estate-api/vendor/
+real-estate-api/.env
+real-estate-api/storage/logs/
+real-estate-api/storage/framework/
+real-estate-api/public/build/
+
+# Next.js
+real-estate-frontend/node_modules/
+real-estate-frontend/.next/
+real-estate-frontend/out/
+real-estate-frontend/.env.local
+
+# Common
+.DS_Store
+*.log
