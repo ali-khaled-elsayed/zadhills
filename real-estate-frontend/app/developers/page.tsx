@@ -1,15 +1,10 @@
 import type { Developer } from '@/types';
 import DeveloperCard from '@/components/DeveloperCard';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+import NoData from '@/components/NoData';
+import { fetchApiCollection } from '@/utils/api';
 
 async function fetchDevelopers(): Promise<Developer[]> {
-  const res = await fetch(`${API_URL}/developers?per_page=100`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error('Failed to load developers');
-  }
-  const json = await res.json();
-  return (json.data?.data ?? json.data) as Developer[];
+  return fetchApiCollection<Developer>('/developers?per_page=100');
 }
 
 export default async function DevelopersPage() {
@@ -38,11 +33,15 @@ export default async function DevelopersPage() {
           </p> */}
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {developers.map((developer) => (
-            <DeveloperCard key={developer.id} developer={developer} />
-          ))}
-        </div>
+        {developers.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {developers.map((developer) => (
+              <DeveloperCard key={developer.id} developer={developer} />
+            ))}
+          </div>
+        ) : (
+          <NoData />
+        )}
       </section>
     </main>
   );

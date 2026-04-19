@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import { apiUrl } from '@/utils/api';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ const ContactForm = () => {
 
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/contact`,
+        apiUrl('/contact'),
         {
           name: formData.name,
           email: formData.email,

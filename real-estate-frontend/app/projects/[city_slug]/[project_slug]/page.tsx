@@ -3,16 +3,11 @@ import Link from 'next/link';
 import type { Project } from '@/types';
 import { getImageUrl } from '@/utils/images';
 import { MapPin, Building2, DollarSign, Calendar, Users } from 'lucide-react';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+import NoData from '@/components/NoData';
+import { fetchApiData } from '@/utils/api';
 
 async function fetchProject(projectSlug: string): Promise<Project> {
-  const res = await fetch(`${API_URL}/projects/${projectSlug}`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error('Failed to load project details');
-  }
-  const json = await res.json();
-  return json.data as Project;
+  return (await fetchApiData<Project>(`/projects/${projectSlug}`)) ?? ({} as Project);
 }
 
 interface ProjectDetailPageProps {
@@ -24,6 +19,14 @@ interface ProjectDetailPageProps {
 
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const project = await fetchProject(params.project_slug);
+
+  if (!project?.id) {
+    return (
+      <main className="min-h-screen bg-gray-50 p-6">
+        <NoData />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gray-50">

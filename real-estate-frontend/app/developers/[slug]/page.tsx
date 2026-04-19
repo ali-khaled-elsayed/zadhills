@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import type { Developer, Project, PaginatedResponse } from '@/types';
 import { getImageUrl } from '@/utils/images';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+import NoData from '@/components/NoData';
+import { fetchApiData } from '@/utils/api';
 
 interface DeveloperDetailResponse {
   developer: Developer;
@@ -10,12 +10,10 @@ interface DeveloperDetailResponse {
 }
 
 async function fetchDeveloper(slug: string): Promise<DeveloperDetailResponse> {
-  const res = await fetch(`${API_URL}/developers/${slug}`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error('Failed to load developer details');
-  }
-  const json = await res.json();
-  return json.data as DeveloperDetailResponse;
+  return (await fetchApiData<DeveloperDetailResponse>(`/developers/${slug}`)) ?? {
+    developer: {} as Developer,
+    projects: { data: [] },
+  };
 }
 
 interface DeveloperPageProps {
@@ -29,6 +27,14 @@ export default async function DeveloperDetailPage({ params }: DeveloperPageProps
   const socialMediaEntries = Object.entries(developer.social_media ?? {}).filter(
     ([platform, url]) => Boolean(platform) && Boolean(url)
   );
+
+  if (!developer?.id) {
+    return (
+      <main className="min-h-screen bg-gray-50 p-6">
+        <NoData />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -159,7 +165,7 @@ export default async function DeveloperDetailPage({ params }: DeveloperPageProps
           </div>
         ) : (
           <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center text-slate-600 shadow-sm">
-            No projects available for this developer.
+            No data to display
           </div>
         )}
       </section>

@@ -10,25 +10,16 @@ import PartnersSection from '../components/PartnersSection';
 import BlogCard from '../components/BlogCard';
 import ContactForm from '../components/ContactForm';
 import { homePageContent } from '../data/homeStaticData';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
-
-async function fetchApi<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error(`Failed to fetch ${path}: ${res.statusText}`);
-  }
-  const json = await res.json();
-  return json.data as T;
-}
+import NoData from '@/components/NoData';
+import { fetchApiCollection } from '@/utils/api';
 
 async function getHomePageData() {
   const [featuredProjects, latestProjects, featuredCities, latestBlogs, partners] = await Promise.all([
-    fetchApi<Project[]>('/projects/featured?limit=6'),
-    fetchApi<Project[]>('/projects/latest?limit=6'),
-    fetchApi<City[]>('/cities/featured?limit=6'),
-    fetchApi<Blog[]>('/blogs/latest?limit=4'),
-    fetchApi<Partner[]>('/partners'),
+    fetchApiCollection<Project>('/projects/featured?limit=6'),
+    fetchApiCollection<Project>('/projects/latest?limit=6'),
+    fetchApiCollection<City>('/cities/featured?limit=6'),
+    fetchApiCollection<Blog>('/blogs/latest?limit=4'),
+    fetchApiCollection<Partner>('/partners'),
   ]);
 
   return {
@@ -86,11 +77,17 @@ export default async function Home() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredProjects.map((project, index) => (
-            <AnimatedCard key={project.id} animation="scale-bounce" delay={index * 100}>
-              <ProjectCard project={project} />
-            </AnimatedCard>
-          ))}
+          {featuredProjects.length > 0 ? (
+            featuredProjects.map((project, index) => (
+              <AnimatedCard key={project.id} animation="scale-bounce" delay={index * 100}>
+                <ProjectCard project={project} />
+              </AnimatedCard>
+            ))
+          ) : (
+            <div className="md:col-span-2 lg:col-span-3">
+              <NoData />
+            </div>
+          )}
         </div>
       </section>
 
@@ -104,11 +101,17 @@ export default async function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredCities.map((city, index) => (
-              <AnimatedCard key={city.id} animation="slide-left" delay={index * 80}>
-                <CityCard city={city} />
-              </AnimatedCard>
-            ))}
+            {featuredCities.length > 0 ? (
+              featuredCities.map((city, index) => (
+                <AnimatedCard key={city.id} animation="slide-left" delay={index * 80}>
+                  <CityCard city={city} />
+                </AnimatedCard>
+              ))
+            ) : (
+              <div className="md:col-span-2 lg:col-span-3">
+                <NoData />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -124,11 +127,17 @@ export default async function Home() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {latestProjects.map((project, index) => (
-            <AnimatedCard key={project.id} animation="scale-bounce" delay={index * 100}>
-              <ProjectCard project={project} />
-            </AnimatedCard>
-          ))}
+          {latestProjects.length > 0 ? (
+            latestProjects.map((project, index) => (
+              <AnimatedCard key={project.id} animation="scale-bounce" delay={index * 100}>
+                <ProjectCard project={project} />
+              </AnimatedCard>
+            ))
+          ) : (
+            <div className="md:col-span-2 lg:col-span-3">
+              <NoData />
+            </div>
+          )}
         </div>
       </section>
 
@@ -147,11 +156,17 @@ export default async function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {latestBlogs.map((blog, index) => (
-              <AnimatedCard key={blog.id} animation="slide-up" delay={index * 80}>
-                <BlogCard blog={blog} />
-              </AnimatedCard>
-            ))}
+            {latestBlogs.length > 0 ? (
+              latestBlogs.map((blog, index) => (
+                <AnimatedCard key={blog.id} animation="slide-up" delay={index * 80}>
+                  <BlogCard blog={blog} />
+                </AnimatedCard>
+              ))
+            ) : (
+              <div className="md:col-span-2 lg:col-span-4">
+                <NoData />
+              </div>
+            )}
           </div>
         </div>
       </section>

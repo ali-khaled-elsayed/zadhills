@@ -6,8 +6,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Project, PaginatedResponse } from '@/types';
 import { getImageUrl } from '@/utils/images';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+import { apiUrl } from '@/utils/api';
+import NoData from '@/components/NoData';
 
 interface SearchFilters {
   area?: string;
@@ -48,7 +48,7 @@ export default function SearchResultsPage() {
         if (filterObj.delivery_date) apiParams.set('delivery_date', filterObj.delivery_date);
         apiParams.set('per_page', '12');
 
-        const res = await fetch(`${API_URL}/projects?${apiParams.toString()}`);
+        const res = await fetch(apiUrl(`/projects?${apiParams.toString()}`));
         if (!res.ok) {
           throw new Error('Failed to fetch search results');
         }
@@ -57,7 +57,7 @@ export default function SearchResultsPage() {
         const data = json.data as PaginatedResponse<Project>;
         setProjects(data?.data ?? []);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        setError('No data to display');
         setProjects([]);
       } finally {
         setLoading(false);
@@ -214,18 +214,7 @@ export default function SearchResultsPage() {
 
         {/* No Results State */}
         {!loading && !error && projects.length === 0 && (
-          <div className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-sm">
-            <h3 className="text-2xl font-bold text-slate-900 mb-3">No projects found</h3>
-            <p className="text-slate-600 mb-6">
-              Try adjusting your search filters or browse our full selection.
-            </p>
-            <Link
-              href="/"
-              className="inline-block rounded-2xl bg-[#1f261e] px-6 py-3 font-semibold text-[#ede5d8] hover:bg-[#333333]"
-            >
-              Back to Home
-            </Link>
-          </div>
+          <NoData />
         )}
       </section>
     </main>

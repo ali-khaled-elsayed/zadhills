@@ -2,8 +2,8 @@ import type { City, Project, PaginatedResponse } from '@/types';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getImageUrl } from '@/utils/images';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+import NoData from '@/components/NoData';
+import { fetchApiData } from '@/utils/api';
 
 interface CityDetailResponse {
   city: City;
@@ -11,12 +11,10 @@ interface CityDetailResponse {
 }
 
 async function fetchCityProjects(citySlug: string): Promise<CityDetailResponse> {
-  const res = await fetch(`${API_URL}/cities/${citySlug}`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error('Failed to load city and projects');
-  }
-  const json = await res.json();
-  return json.data as CityDetailResponse;
+  return (await fetchApiData<CityDetailResponse>(`/cities/${citySlug}`)) ?? {
+    city: {} as City,
+    projects: { data: [] },
+  };
 }
 
 interface CityProjectsPageProps {
@@ -27,6 +25,14 @@ interface CityProjectsPageProps {
 
 export default async function CityProjectsPage({ params }: CityProjectsPageProps) {
   const { city, projects } = await fetchCityProjects(params.city_slug);
+
+  if (!city?.id) {
+    return (
+      <main className="min-h-screen bg-gray-50 p-6">
+        <NoData />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -115,9 +121,7 @@ export default async function CityProjectsPage({ params }: CityProjectsPageProps
             ))}
           </div>
         ) : (
-          <div className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-sm">
-            <p className="text-slate-600">No projects available in this city yet.</p>
-          </div>
+          <NoData />
         )}
       </section>
     </main>
