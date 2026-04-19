@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import axios from 'axios';
+import { apiUrl } from '@/utils/api';
 
 interface ContactFormData {
   name: string;
@@ -30,16 +29,18 @@ export default function ContactUs() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [developers, setDevelopers] = useState<Developer[]>([]);
+  const [developersLoaded, setDevelopersLoaded] = useState(false);
 
   useEffect(() => {
     const fetchDevelopers = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/developers?limit=6`
-        );
+        const response = await axios.get(apiUrl('/developers?limit=6'));
         setDevelopers(response.data.data?.slice(0, 6) || []);
       } catch (error) {
         console.error('Failed to fetch developers:', error);
+        setDevelopers([]);
+      } finally {
+        setDevelopersLoaded(true);
       }
     };
 
@@ -61,16 +62,13 @@ export default function ContactUs() {
     setLoading(true);
 
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/contact`,
-        {
+      await axios.post(apiUrl('/contact'), {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
           subject: formData.subject,
           message: formData.message,
-        }
-      );
+        });
 
       setSuccess(true);
       setFormData({
@@ -90,9 +88,7 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-
-      <main className="flex-grow">
+      <main className="bg-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-b from-[#ede5d8] to-white py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -271,7 +267,7 @@ export default function ContactUs() {
         </section>
 
         {/* Our Partners Section */}
-        {developers.length > 0 && (
+        {developers.length > 0 ? (
           <section className="py-16 bg-[#f5f3f0]">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-3xl font-bold text-[#1f261e] mb-12 text-center">
@@ -299,7 +295,15 @@ export default function ContactUs() {
               </div>
             </div>
           </section>
-        )}
+        ) : developersLoaded ? (
+          <section className="py-16 bg-[#f5f3f0]">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center text-slate-600 shadow-sm">
+                No data to display
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         {/* Connect With Us Section */}
         <section className="py-16 bg-white">
@@ -350,7 +354,5 @@ export default function ContactUs() {
           </div>
         </section>
       </main>
-
-    </div>
   );
 }

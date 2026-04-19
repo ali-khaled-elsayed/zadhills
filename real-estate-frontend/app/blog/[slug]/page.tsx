@@ -2,16 +2,11 @@ import Image from 'next/image';
 import type { Blog } from '@/types';
 import { Calendar, User } from 'lucide-react';
 import { getImageUrl } from '@/utils/images';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+import NoData from '@/components/NoData';
+import { fetchApiData } from '@/utils/api';
 
 async function fetchBlog(slug: string): Promise<Blog> {
-  const res = await fetch(`${API_URL}/blogs/${slug}`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error('Failed to load blog post');
-  }
-  const json = await res.json();
-  return json.data as Blog;
+  return (await fetchApiData<Blog>(`/blogs/${slug}`)) ?? ({} as Blog);
 }
 
 interface BlogPageProps {
@@ -22,6 +17,14 @@ interface BlogPageProps {
 
 export default async function BlogDetailPage({ params }: BlogPageProps) {
   const blog = await fetchBlog(params.slug);
+
+  if (!blog?.id) {
+    return (
+      <main className="min-h-screen bg-gray-50 p-6">
+        <NoData />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gray-50">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { apiUrl } from '@/utils/api';
 
 interface City {
   id: number;
@@ -18,8 +19,7 @@ export default function CitiesDropdown() {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
-        const res = await fetch(`${API_URL}/cities?per_page=100`);
+        const res = await fetch(apiUrl('/cities?per_page=100'));
         if (res.ok) {
           const json = await res.json();
           setCities((json.data?.data ?? json.data) as City[]);
@@ -58,7 +58,7 @@ export default function CitiesDropdown() {
             </Link>
           ))
         ) : (
-          <div className="px-4 py-3 text-sm text-slate-500">No cities available</div>
+          <div className="px-4 py-3 text-sm text-slate-500">No data to display</div>
         )}
       </div>
     </div>

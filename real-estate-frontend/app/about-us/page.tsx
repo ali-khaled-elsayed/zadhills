@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import axios from 'axios';
+import { apiUrl } from '@/utils/api';
 
 interface PageContent {
   content?: {
@@ -16,13 +15,14 @@ interface PageContent {
 export default function AboutUs() {
   const [pageData, setPageData] = useState<PageContent>({});
   const [loading, setLoading] = useState(true);
+  const hasPageContent = Boolean(
+    pageData.content?.about_section || pageData.content?.mission_section || pageData.content?.values_section
+  );
 
   useEffect(() => {
     const fetchPageContent = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/page-content?page=about-us`
-        );
+        const response = await axios.get(apiUrl('/page-content?page=about-us'));
         setPageData(response.data.data || {});
       } catch (error) {
         console.error('Failed to fetch page content:', error);
@@ -35,9 +35,7 @@ export default function AboutUs() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      
-      <main className="flex-grow">
+      <main className="bg-white">
         {/* Hero Section */}
         <section className="bg-gradient-to-b from-[#ede5d8] to-white py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +61,11 @@ export default function AboutUs() {
                   Unlike traditional real estate brokers, our role does not end with the completion of your transaction. Instead, our main relationship with you begins after the sale is completed. We believe in building long-term partnerships with our clients.
                 </p>
                 <p className="text-[#1f261e] leading-relaxed">
-                  {pageData.content?.about_section || 'Our team comprises experienced professionals with deep knowledge of the Egyptian real estate market. We are dedicated to providing exceptional service at every stage of your real estate journey.'}
+                  {hasPageContent
+                    ? pageData.content?.about_section
+                    : loading
+                      ? 'Loading...'
+                      : 'No data to display'}
                 </p>
               </div>
               <div className="bg-[#ede5d8] rounded-lg h-80 flex items-center justify-center">
@@ -237,7 +239,5 @@ export default function AboutUs() {
           </div>
         </section>
       </main>
-
-    </div>
   );
 }
