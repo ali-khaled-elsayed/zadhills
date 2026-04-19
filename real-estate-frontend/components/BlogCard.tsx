@@ -30,7 +30,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
           />
         </div>
         <div className="p-4">
-          <div className="flex items-center gap-4 text-xs text-gray-500 mb-2">
+          {/* <div className="flex items-center gap-4 text-xs text-gray-500 mb-2">
             <div className="flex items-center gap-1">
               <Calendar className="w-3 h-3" />
               <span>{formatDate(blog.published_at)}</span>
@@ -41,7 +41,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
                 <span>{blog.author.name}</span>
               </div>
             )}
-          </div>
+          </div> */}
           <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-gold-600 transition-colors">
             {blog.title_en}
           </h3>

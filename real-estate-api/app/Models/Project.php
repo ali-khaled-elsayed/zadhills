@@ -49,7 +49,6 @@ class Project extends Model
         'bathrooms',
         'gallery',
         'floor_plans',
-        'views_count',
         'meta',
     ];
 
@@ -170,14 +169,6 @@ class Project extends Model
     public function scopeFeatured($query)
     {
         return $query->where('is_featured', true);
-    }
-
-    /**
-     * Scope a query to order by sort order.
-     */
-    public function scopeOrdered($query)
-    {
-        return $query->orderBy('sort_order');
     }
 
     /**

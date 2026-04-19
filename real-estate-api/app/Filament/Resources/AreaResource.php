@@ -23,9 +23,11 @@ class AreaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('city_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('city_id')
+                    ->relationship('city', 'name_en')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('name_en')
                     ->required()
                     ->maxLength(255),
@@ -41,10 +43,6 @@ class AreaResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
-                Forms\Components\TextInput::make('sort_order')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
             ]);
     }
 
@@ -52,8 +50,9 @@ class AreaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('city_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('city.name_en')
+                    ->label('City')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name_en')
                     ->searchable(),
@@ -63,9 +62,6 @@ class AreaResource extends Resource
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('sort_order')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

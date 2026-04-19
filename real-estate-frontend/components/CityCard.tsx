@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { City } from '@/types';
 import { Building2 } from 'lucide-react';
+import { getImageUrl } from '@/utils/images';
 
 interface CityCardProps {
   city: City;
@@ -13,7 +14,7 @@ export default function CityCard({ city }: CityCardProps) {
       <div className="relative h-48 rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 group-hover:-translate-y-1">
         {city.image ? (
           <Image
-            src={city.image}
+            src={getImageUrl(city.image)}
             alt={city.name_en}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-500"

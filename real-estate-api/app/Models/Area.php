@@ -23,7 +23,6 @@ class Area extends Model
         'description_en',
         'description_ar',
         'is_active',
-        'sort_order',
     ];
 
     /**
@@ -94,7 +93,7 @@ class Area extends Model
      */
     public function scopeOrdered($query)
     {
-        return $query->orderBy('sort_order');
+        return $query->orderByDesc('created_at');
     }
 
     /**

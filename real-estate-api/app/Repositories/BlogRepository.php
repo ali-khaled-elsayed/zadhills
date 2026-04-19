@@ -28,7 +28,7 @@ class BlogRepository extends BaseRepository
     {
         return $this->model->published()
             ->with('author')
-            ->orderByDesc('published_at')
+            ->latest()
             ->limit($limit)
             ->get();
     }
@@ -36,11 +36,13 @@ class BlogRepository extends BaseRepository
     public function search(string $search, int $perPage = 12): LengthAwarePaginator
     {
         return $this->model->published()
-            ->where('title_en', 'LIKE', "%{$search}%")
-            ->orWhere('title_ar', 'LIKE', "%{$search}%")
-            ->orWhere('content_en', 'LIKE', "%{$search}%")
-            ->orWhere('content_ar', 'LIKE', "%{$search}%")
-            ->orderByDesc('published_at')
+            ->where(function ($query) use ($search) {
+                $query->where('title_en', 'LIKE', "%{$search}%")
+                    ->orWhere('title_ar', 'LIKE', "%{$search}%")
+                    ->orWhere('content_en', 'LIKE', "%{$search}%")
+                    ->orWhere('content_ar', 'LIKE', "%{$search}%");
+            })
+            ->latest()
             ->paginate($perPage);
     }
 
@@ -48,7 +50,7 @@ class BlogRepository extends BaseRepository
     {
         return $this->model->published()
             ->whereJsonContains('tags', $tag)
-            ->orderByDesc('published_at')
+            ->latest()
             ->paginate($perPage);
     }
 }

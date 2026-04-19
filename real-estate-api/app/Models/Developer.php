@@ -29,7 +29,6 @@ class Developer extends Model
         'address_ar',
         'social_media',
         'is_active',
-        'sort_order',
     ];
 
     /**
@@ -101,6 +100,6 @@ class Developer extends Model
      */
     public function scopeOrdered($query)
     {
-        return $query->orderBy('sort_order');
+        return $query->orderByDesc('created_at');
     }
 }

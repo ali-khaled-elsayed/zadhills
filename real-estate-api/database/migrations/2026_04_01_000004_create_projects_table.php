@@ -46,8 +46,6 @@ return new class extends Migration
             $table->integer('bathrooms')->nullable();
             $table->json('gallery')->nullable();
             $table->json('floor_plans')->nullable();
-            $table->integer('views_count')->default(0);
-            $table->integer('sort_order')->default(0);
             $table->json('meta')->nullable();
             $table->timestamps();
         });

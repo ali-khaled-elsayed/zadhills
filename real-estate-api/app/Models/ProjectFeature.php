@@ -43,6 +43,6 @@ class ProjectFeature extends Model
      */
     public function scopeOrdered($query)
     {
-        return $query->orderBy('sort_order');
+        return $query->orderByDesc('created_at');
     }
 }

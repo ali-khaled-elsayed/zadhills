@@ -16,7 +16,6 @@ export interface City {
   description_en?: string;
   description_ar?: string;
   is_active?: boolean;
-  sort_order?: number;
   created_at?: string;
   updated_at?: string;
   projects_count?: number;
@@ -29,9 +28,12 @@ export interface Area {
   name_en: string;
   name_ar?: string;
   is_active?: boolean;
-  sort_order?: number;
   created_at?: string;
   updated_at?: string;
+}
+
+export interface DeveloperSocialMedia {
+  [platform: string]: string;
 }
 
 export interface Developer {
@@ -44,13 +46,13 @@ export interface Developer {
   description_ar?: string;
   address_en?: string;
   is_active?: boolean;
-  sort_order?: number;
   created_at?: string;
   updated_at?: string;
   projects_count?: number;
   website?: string;
   email?: string;
   phone?: string;
+  social_media?: DeveloperSocialMedia | null;
 }
 
 export interface Partner {
@@ -84,8 +86,6 @@ export interface Project {
   available_units?: number;
   delivery_date?: string;
   unit_type?: string;
-  views_count?: number;
-  sort_order?: number;
   created_at?: string;
   updated_at?: string;
   amenities?: string[];
@@ -106,14 +106,9 @@ export interface Blog {
   full_description_ar?: string;
   content_en?: string;
   image?: string;
-  published_at?: string;
   created_at?: string;
   updated_at?: string;
   status?: string;
-  views_count?: number;
-  sort_order?: number;
-  tags?: string[];
-  author?: Author;
 }
 
 export interface PaginatedResponse<T> {

@@ -23,9 +23,11 @@ class ProjectImageResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('project_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('project_id')
+                    ->relationship('project', 'title_en')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->required(),
@@ -42,8 +44,9 @@ class ProjectImageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('project_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('project.title_en')
+                    ->label('Project')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('sort_order')

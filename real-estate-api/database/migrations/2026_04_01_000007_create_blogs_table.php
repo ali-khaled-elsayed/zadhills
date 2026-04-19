@@ -21,12 +21,7 @@ return new class extends Migration
             $table->longText('content_en')->nullable();
             $table->longText('content_ar')->nullable();
             $table->string('image')->nullable();
-            $table->foreignId('author_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->json('tags')->nullable();
             $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
-            $table->timestamp('published_at')->nullable();
-            $table->integer('views_count')->default(0);
-            $table->integer('sort_order')->default(0);
             $table->json('meta')->nullable();
             $table->timestamps();
         });

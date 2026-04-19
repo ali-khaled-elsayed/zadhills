@@ -23,7 +23,6 @@ class City extends Model
         'description_en',
         'description_ar',
         'is_active',
-        'sort_order',
     ];
 
     /**
@@ -98,10 +97,10 @@ class City extends Model
     }
 
     /**
-     * Scope a query to order by sort order.
+     * Scope a query to order by created date (newest first).
      */
     public function scopeOrdered($query)
     {
-        return $query->orderBy('sort_order');
+        return $query->orderByDesc('created_at');
     }
 }

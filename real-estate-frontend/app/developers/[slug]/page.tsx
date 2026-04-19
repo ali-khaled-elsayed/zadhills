@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import type { Developer, Project, PaginatedResponse } from '@/types';
 import { getImageUrl } from '@/utils/images';
 
@@ -27,6 +26,9 @@ interface DeveloperPageProps {
 
 export default async function DeveloperDetailPage({ params }: DeveloperPageProps) {
   const { developer, projects } = await fetchDeveloper(params.slug);
+  const socialMediaEntries = Object.entries(developer.social_media ?? {}).filter(
+    ([platform, url]) => Boolean(platform) && Boolean(url)
+  );
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -88,6 +90,25 @@ export default async function DeveloperDetailPage({ params }: DeveloperPageProps
                       </div>
                     )}
                   </div>
+
+                  {socialMediaEntries.length > 0 && (
+                    <div className="rounded-3xl bg-slate-900/60 p-5">
+                      <p className="text-xs uppercase tracking-[0.4em] text-slate-400">Social Media</p>
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        {socialMediaEntries.map(([platform, url]) => (
+                          <a
+                            key={platform}
+                            href={url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white hover:text-[#1f261e]"
+                          >
+                            {platform}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -32,8 +32,11 @@ class DeveloperResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('logo')
-                    ->maxLength(255),
+                Forms\Components\FileUpload::make('logo')
+                    ->label('Logo')
+                    ->image()
+                    ->directory('developers')
+                    ->visibility('public'),
                 Forms\Components\Textarea::make('description_en')
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('description_ar')
@@ -50,13 +53,13 @@ class DeveloperResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('address_ar')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('social_media'),
+                Forms\Components\KeyValue::make('social_media')
+                    ->keyLabel('Platform')
+                    ->valueLabel('URL')
+                    ->addActionLabel('Add social media link')
+                    ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
-                Forms\Components\TextInput::make('sort_order')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
             ]);
     }
 
@@ -70,8 +73,10 @@ class DeveloperResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('logo')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('logo')
+                    ->label('Logo')
+                    ->circular()
+                    ->defaultImageUrl('/images/placeholder-company.png'),
                 Tables\Columns\TextColumn::make('website')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
@@ -80,9 +85,6 @@ class DeveloperResource extends Resource
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('sort_order')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -25,8 +25,6 @@ class PartnerResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Partners';
 
-    protected static ?string $navigationGroup = 'Content';
-
     protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form

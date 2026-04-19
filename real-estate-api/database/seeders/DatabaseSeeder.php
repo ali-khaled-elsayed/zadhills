@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Database\Seeders;
+namespace Database\Seeders;
 
-use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolePermissionSeeder::class,
+            SuperAdminUserSeeder::class,
+            PartnerSeeder::class,
         ]);
     }
 }

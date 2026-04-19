@@ -45,13 +45,13 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <section className="relative h-[680px] overflow-hidden bg-slate-900">
+      <section className="relative h-[680px] overflow-hidden bg-[#1f261e]">
         <img
           src={homePageContent.heroBackground}
           alt="Hero Background"
-          className="absolute inset-0 w-full h-full object-cover opacity-80 animate-fade-in"
+          className="absolute inset-0 w-full h-full object-cover opacity-35 animate-fade-in"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-900/50 to-transparent" />
+        <div className="absolute inset-0 bg-[#1f261e]/80" />
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center text-white">
           <p className="text-sm uppercase tracking-[0.4em] text-slate-200 mb-4 animate-slide-down">
             Premium Real Estate Investment

@@ -68,7 +68,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/site-map" className="text-[#ede5d8] hover:text-white transition-colors">
+                <Link href="/developers" className="text-[#ede5d8] hover:text-white transition-colors">
                   Developers
                 </Link>
               </li>
@@ -85,22 +85,17 @@ const Footer = () => {
             <h3 className="text-xl font-bold">Most Searched</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/cities" className="text-[#ede5d8] hover:text-white transition-colors">
-                  Cities
-                </Link>
-              </li>
-              <li>
-                <Link href="/cities/new-cairo" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/projects/new-cairo" className="text-gray-300 hover:text-white transition-colors">
                   New Cairo
                 </Link>
               </li>
               <li>
-                <Link href="/cities/north-coast" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/projects/north-coast" className="text-gray-300 hover:text-white transition-colors">
                   North Coast
                 </Link>
               </li>
               <li>
-                <Link href="/cities/new-capital" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/projects/new-capital" className="text-gray-300 hover:text-white transition-colors">
                   New Capital
                 </Link>
               </li>

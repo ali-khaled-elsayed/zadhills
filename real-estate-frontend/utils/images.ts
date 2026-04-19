@@ -11,8 +11,13 @@ export function getImageUrl(imagePath?: string | null) {
   }
 
   // Handle API-relative paths
-  if (imagePath.startsWith('/')) {
+  if (imagePath.startsWith('/api/')) {
     return `${API_BASE_URL}${imagePath}`;
+  }
+
+  // Handle static images directly from public directory
+  if (imagePath.startsWith('/cities/') || imagePath.startsWith('/images/')) {
+    return imagePath;
   }
 
   // Handle default/fallback images that don't exist
@@ -20,5 +25,6 @@ export function getImageUrl(imagePath?: string | null) {
     return '/cities/default-city.svg';
   }
 
-  return `${API_BASE_URL}/${imagePath.replace(/^\/+/, '')}`;
+  // For all other images, serve them from the API server's storage
+  return `${API_BASE_URL}/storage/${imagePath.replace(/^\/+/, '')}`;
 }

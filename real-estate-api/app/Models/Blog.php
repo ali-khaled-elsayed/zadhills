@@ -24,12 +24,7 @@ class Blog extends Model
         'content_en',
         'content_ar',
         'image',
-        'author_id',
-        'tags',
         'status',
-        'published_at',
-        'views_count',
-        'sort_order',
         'meta',
     ];
 
@@ -39,8 +34,6 @@ class Blog extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'published_at' => 'datetime',
-        'tags' => 'array',
         'meta' => 'array',
     ];
 
@@ -95,9 +88,7 @@ class Blog extends Model
      */
     public function scopePublished($query)
     {
-        return $query->where('status', 'published')
-            ->whereNotNull('published_at')
-            ->where('published_at', '<=', now());
+        return $query->where('status', 'published');
     }
 
     /**
@@ -105,7 +96,7 @@ class Blog extends Model
      */
     public function scopeOrdered($query)
     {
-        return $query->orderBy('sort_order');
+        return $query->latest();
     }
 
     /**

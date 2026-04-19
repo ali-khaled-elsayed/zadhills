@@ -187,11 +187,6 @@ class ProjectResource extends Resource
                         Forms\Components\Toggle::make('is_featured')
                             ->required()
                             ->label('Featured Project?'),
-                        Forms\Components\TextInput::make('views_count')
-                            ->required()
-                            ->numeric()
-                            ->default(0)
-                            ->label('Views Count'),
                         Forms\Components\Textarea::make('amenities')
                             ->columnSpanFull()
                             ->label('Amenities (one per line)'),

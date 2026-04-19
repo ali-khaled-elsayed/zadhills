@@ -41,7 +41,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
 
             <div className="p-8 md:p-12">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-gray-600 mb-8">
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <div className="flex items-center gap-3 text-sm">
                     <Calendar className="w-4 h-4" />
                     <span>{blog.published_at ? new Date(blog.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'No date'}</span>
@@ -52,17 +52,17 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                       <span>{blog.author.name}</span>
                     </div>
                   )}
-                </div>
+                </div> */}
 
                 <div className="grid grid-cols-2 gap-4 text-sm text-gray-500">
                   <div className="rounded-2xl bg-slate-100 p-3">
                     <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">Status</span>
                     <span className="font-semibold text-gray-900">{blog.status}</span>
                   </div>
-                  <div className="rounded-2xl bg-slate-100 p-3">
+                  {/* <div className="rounded-2xl bg-slate-100 p-3">
                     <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">Views</span>
                     <span className="font-semibold text-gray-900">{blog.views_count ?? 0}</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
@@ -71,7 +71,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               </h1>
               {blog.excerpt_en && <p className="text-gray-600 text-lg mb-8">{blog.excerpt_en}</p>}
 
-              {blog.tags && blog.tags.length > 0 && (
+              {/* {blog.tags && blog.tags.length > 0 && (
                 <div className="mb-8 flex flex-wrap gap-3">
                   {blog.tags.map((tag) => (
                     <span key={tag} className="rounded-full bg-[#1f261e] px-4 py-2 text-sm text-[#ede5d8]">
@@ -79,7 +79,7 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                     </span>
                   ))}
                 </div>
-              )}
+              )} */}
 
               {blog.content_en ? (
                 <article className="prose prose-lg prose-slate max-w-none">
@@ -90,10 +90,10 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
               )}
 
               <div className="mt-12 grid gap-4 sm:grid-cols-2 text-sm text-gray-500">
-                <div className="rounded-2xl bg-slate-100 p-4">
+                {/* <div className="rounded-2xl bg-slate-100 p-4">
                   <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">Slug</span>
                   <span className="font-medium text-gray-900">{blog.slug}</span>
-                </div>
+                </div> */}
                 <div className="rounded-2xl bg-slate-100 p-4">
                   <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">Created</span>
                   <span className="font-medium text-gray-900">{new Date(blog.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
@@ -102,10 +102,10 @@ export default async function BlogDetailPage({ params }: BlogPageProps) {
                   <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">Updated</span>
                   <span className="font-medium text-gray-900">{new Date(blog.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                 </div>
-                <div className="rounded-2xl bg-slate-100 p-4">
+                {/* <div className="rounded-2xl bg-slate-100 p-4">
                   <span className="block text-xs uppercase tracking-[0.2em] text-gray-400">Email</span>
                   <span className="font-medium text-gray-900">{blog.author?.email ?? '—'}</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
