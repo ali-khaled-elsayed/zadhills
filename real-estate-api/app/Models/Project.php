@@ -124,14 +124,6 @@ class Project extends Model
     }
 
     /**
-     * Get the leads for the project.
-     */
-    public function leads()
-    {
-        return $this->hasMany(Lead::class);
-    }
-
-    /**
      * Get the title based on locale.
      */
     public function getTitleAttribute(): string
@@ -221,13 +213,5 @@ class Project extends Model
         })->when($max, function ($q) use ($max) {
             $q->where('price_to', '<=', $max);
         });
-    }
-
-    /**
-     * Increment views count.
-     */
-    public function incrementViewsCount()
-    {
-        $this->increment('views_count');
     }
 }

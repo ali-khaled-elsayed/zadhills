@@ -48,7 +48,7 @@ export default function SearchResultsPage() {
         if (filterObj.delivery_date) apiParams.set('delivery_date', filterObj.delivery_date);
         apiParams.set('per_page', '12');
 
-        const res = await fetch(apiUrl(`/projects?${apiParams.toString()}`));
+        const res = await fetch(apiUrl(`/projects/search?${apiParams.toString()}`));
         if (!res.ok) {
           throw new Error('Failed to fetch search results');
         }

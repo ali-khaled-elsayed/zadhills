@@ -98,12 +98,4 @@ class Blog extends Model
     {
         return $query->latest();
     }
-
-    /**
-     * Increment views count.
-     */
-    public function incrementViewsCount()
-    {
-        $this->increment('views_count');
-    }
 }

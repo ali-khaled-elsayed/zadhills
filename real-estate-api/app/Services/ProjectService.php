@@ -41,9 +41,6 @@ class ProjectService
     public function findBySlug(string $slug): ?\App\Models\Project
     {
         $project = $this->projectRepository->findBySlug($slug);
-        if ($project) {
-            $project->incrementViewsCount();
-        }
         return $project;
     }
 

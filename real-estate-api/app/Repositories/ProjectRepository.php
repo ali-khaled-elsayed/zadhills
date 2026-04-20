@@ -118,11 +118,12 @@ class ProjectRepository extends BaseRepository
         }
 
         // Filter by price range
-        if (isset($filters['price_from'])) {
-            $query->where('price_from', '>=', $filters['price_from']);
-        }
-        if (isset($filters['price_to'])) {
-            $query->where('price_to', '<=', $filters['price_to']);
+        if (isset($filters['price_per_meter'])) {
+            $priceRange = explode('-', $filters['price_per_meter']);
+            if (count($priceRange) === 2) {
+                $query->where('price_from', '>=', $priceRange[0]);
+                $query->where('price_to', '<=', $priceRange[1]);
+            }
         }
 
         // Filter by installment years

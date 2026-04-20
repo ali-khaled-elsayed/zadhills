@@ -76,6 +76,7 @@ export interface Project {
   status?: string;
   is_featured?: boolean;
   price_from?: number;
+  price_to?: number;
   installment_years?: number;
   down_payment?: number;
   bedrooms?: number;
@@ -85,7 +86,13 @@ export interface Project {
   total_units?: number;
   available_units?: number;
   delivery_date?: string;
+  location_map?: string;
+  location_link?: string;
+  latitude?: number;
+  longitude?: number;
   unit_type?: string;
+  floor_plans?: string[];
+  meta?: any;
   created_at?: string;
   updated_at?: string;
   amenities?: string[];

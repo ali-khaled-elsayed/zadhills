@@ -1,18 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { fetchApiCollection } from '@/utils/api';
 
 export default function SearchFilters() {
   const router = useRouter();
-  const [filters, setFilters] = useState({
+const [filters, setFilters] = useState({
     area: '',
     unit_type: '',
     price_per_meter: '',
     delivery_date: '',
   });
+  const [areas, setAreas] = useState<{ id: number; name_en: string }[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const params = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
@@ -22,6 +24,23 @@ export default function SearchFilters() {
     });
     router.push(`/projects?${params.toString()}`);
   };
+
+// Fetch areas from backend
+  const fetchAreas = async () => {
+    const areasData = await fetchApiCollection<{ id: number; name_en: string }>('/areas');
+    setAreas(areasData);
+    localStorage.setItem('areas', JSON.stringify(areasData));
+  };
+
+  // Fetch areas on component mount
+  useEffect(() => {
+    const cachedAreas = localStorage.getItem('areas');
+    if (cachedAreas) {
+      setAreas(JSON.parse(cachedAreas));
+    } else {
+      fetchAreas();
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -36,25 +55,25 @@ export default function SearchFilters() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Area
           </label>
-          <select
+<select
             name="area"
             value={filters.area}
             onChange={handleChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1f261e] focus:border-transparent appearance-none bg-white text-gray-900 font-medium"
           >
             <option value="" className="text-gray-400">All Areas</option>
-            <option value="new-cairo" className="text-gray-900">New Cairo</option>
-            <option value="north-coast" className="text-gray-900">North Coast</option>
-            <option value="new-capital" className="text-gray-900">New Capital</option>
-            <option value="6-october" className="text-gray-900">6 October</option>
-            <option value="el-sheikh-zayed" className="text-gray-900">El Sheikh Zayed</option>
+            {areas.map((area) => (
+              <option key={area.id} value={area.id} className="text-gray-900">
+                {area.name_en}
+              </option>
+            ))}
           </select>
         </div>
 
         {/* Unit Type */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            نوع الوحدة
+            Unit Type
           </label>
           <select
             name="unit_type"
@@ -76,7 +95,7 @@ export default function SearchFilters() {
         {/* Price per meter */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            سعر المتر
+            price
           </label>
           <select
             name="price_per_meter"
@@ -95,7 +114,7 @@ export default function SearchFilters() {
         {/* Delivery Date */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            موعد التسليم
+            Delivery Date
           </label>
           <select
             name="delivery_date"

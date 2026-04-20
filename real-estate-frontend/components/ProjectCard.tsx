@@ -118,7 +118,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Action */}
         <Link
-          href={`/projects/${project.slug}`}
+          href={`/projects/${project.city.slug}/${project.slug}`}
           className="block text-center bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-[#1f261e] transition-colors"
         >
           View Details

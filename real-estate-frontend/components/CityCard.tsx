@@ -10,7 +10,7 @@ interface CityCardProps {
 
 export default function CityCard({ city }: CityCardProps) {
   return (
-    <Link href={`/cities/${city.slug}`} className="group block">
+    <Link href={`/projects/${city.slug}`} className="group block">
       <div className="relative h-48 rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 group-hover:-translate-y-1">
         {city.image ? (
           <Image

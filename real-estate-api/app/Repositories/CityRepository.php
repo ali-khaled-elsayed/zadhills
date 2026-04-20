@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\City;
+use App\Models\Area;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -85,6 +86,20 @@ class CityRepository extends BaseRepository
             ->withCount('projects')
             ->orderByDesc('projects_count')
             ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * Get areas for a specific city.
+     *
+     * @param int $cityId
+     * @return Collection
+     */
+    public function getAreasByCity(int $cityId): Collection
+    {
+        return Area::where('city_id', $cityId)
+            ->active()
+            ->ordered()
             ->get();
     }
 }

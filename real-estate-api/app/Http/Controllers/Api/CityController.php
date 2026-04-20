@@ -69,4 +69,17 @@ class CityController extends Controller
             ],
         ]);
     }
+
+    /**
+     * Get areas for a specific city.
+     */
+    public function areas(int $cityId): JsonResponse
+    {
+        $areas = $this->cityRepository->getAreasByCity($cityId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $areas,
+        ]);
+    }
 }

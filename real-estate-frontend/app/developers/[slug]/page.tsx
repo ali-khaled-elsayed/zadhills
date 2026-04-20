@@ -2,6 +2,7 @@ import Image from 'next/image';
 import type { Developer, Project, PaginatedResponse } from '@/types';
 import { getImageUrl } from '@/utils/images';
 import NoData from '@/components/NoData';
+import ProjectCard from '@/components/ProjectCard';
 import { fetchApiData } from '@/utils/api';
 
 interface DeveloperDetailResponse {
@@ -145,22 +146,16 @@ export default async function DeveloperDetailPage({ params }: DeveloperPageProps
       <section className="container mx-auto px-4 py-16">
         <div className="mb-10">
           <h2 className="text-3xl font-bold text-slate-900">Developer projects</h2>
-          
+
         </div>
 
         {projects?.data?.length ? (
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {projects.data.map((project) => (
-              <div
+              <ProjectCard
                 key={project.id}
-                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
-              >
-                <div className="mb-4 text-xs uppercase tracking-[0.4em] text-slate-400">Project</div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">{project.title_en}</h3>
-                <p className="text-sm leading-6 text-slate-600 line-clamp-3">
-                  {project.short_description_en || 'Premium residential and investment-focused property.'}
-                </p>
-              </div>
+                project={project}
+              />
             ))}
           </div>
         ) : (

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AreaController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\ContactController;
@@ -37,6 +38,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/cities', [CityController::class, 'index']);
     Route::get('/cities/featured', [CityController::class, 'featured']);
     Route::get('/cities/{slug}', [CityController::class, 'show']);
+    Route::get('/cities/{cityId}/areas', [CityController::class, 'areas']);
+
+    // Areas
+    Route::get('/areas', [AreaController::class, 'index']);
 
     // Developers
     Route::get('/developers', [DeveloperController::class, 'index']);
@@ -56,9 +61,6 @@ Route::prefix('v1')->group(function () {
 
     // Contact
     Route::post('/contact', [ContactController::class, 'store']);
-
-    // Leads
-    Route::post('/leads', [LeadController::class, 'store']);
 });
 
 // Protected routes (require authentication)

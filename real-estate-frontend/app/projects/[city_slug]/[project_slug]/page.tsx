@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Project } from '@/types';
 import { getImageUrl } from '@/utils/images';
-import { MapPin, Building2, DollarSign, Calendar, Users } from 'lucide-react';
+import { MapPin, Building2, DollarSign, Calendar, Users, Bed, Bath, Maximize, Building, Globe, FileText } from 'lucide-react';
 import NoData from '@/components/NoData';
 import { fetchApiData } from '@/utils/api';
 
@@ -109,8 +109,9 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     <div className="flex items-center gap-3">
                       <DollarSign className="w-5 h-5 text-slate-400" />
                       <div>
-                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Price From</p>
-                        <p className="font-semibold text-slate-900">{project.price_from.toLocaleString()} EGP</p>
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Price From - To</p>
+                        <p className="font-semibold text-slate-900">{project.price_from.toLocaleString()}</p>
+                        <p className="font-semibold text-slate-900"> - {project.price_to?.toLocaleString()} EGP</p>
                       </div>
                     </div>
                   </div>
@@ -128,6 +129,75 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                             day: 'numeric',
                           })}
                         </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {project.installment_years && (
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <div className="flex items-center gap-3">
+                      <Building className="w-5 h-5 text-slate-400" />
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Installments</p>
+                        <p className="font-semibold text-slate-900">{project.installment_years} Years</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {project.down_payment && (
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <div className="flex items-center gap-3">
+                      <DollarSign className="w-5 h-5 text-slate-400" />
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Down Payment</p>
+                        <p className="font-semibold text-slate-900">{project.down_payment}%</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {project.bedrooms && (
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <div className="flex items-center gap-3">
+                      <Bed className="w-5 h-5 text-slate-400" />
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Bedrooms</p>
+                        <p className="font-semibold text-slate-900">{project.bedrooms}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {project.bathrooms !== undefined && (
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <div className="flex items-center gap-3">
+                      <Bath className="w-5 h-5 text-slate-400" />
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Bathrooms</p>
+                        <p className="font-semibold text-slate-900">{project.bathrooms}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {project.area_from && (
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <div className="flex items-center gap-3">
+                      <Maximize className="w-5 h-5 text-slate-400" />
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Area</p>
+                        <p className="font-semibold text-slate-900">
+                          {project.area_from}
+                          {project.area_to && ` - ${project.area_to}`} m²
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {project.unit_type && (
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <div className="flex items-center gap-3">
+                      <Building className="w-5 h-5 text-slate-400" />
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Unit Type</p>
+                        <p className="font-semibold text-slate-900">{project.unit_type}</p>
                       </div>
                     </div>
                   </div>
@@ -172,6 +242,24 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                   </div>
                 </div>
               )}
+
+              {project.floor_plans && Array.isArray(project.floor_plans) && project.floor_plans.length > 0 && (
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900 mb-6">Floor Plans</h2>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {project.floor_plans.map((floorPlan, idx) => (
+                      <div key={idx} className="relative h-64 overflow-hidden rounded-3xl bg-slate-100">
+                        <Image
+                          src={getImageUrl(floorPlan)}
+                          alt={`${project.title_en} - Floor Plan ${idx + 1}`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -207,16 +295,82 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     <p className="text-lg font-semibold text-slate-900">{project.bedrooms}</p>
                   </div>
                 )}
-                {project.views_count !== undefined && (
+                {project.bathrooms !== undefined && (
                   <div className="pt-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500 mb-1">Views</p>
-                    <p className="text-lg font-semibold text-slate-900">{project.views_count}</p>
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500 mb-1">Bathrooms</p>
+                    <p className="text-lg font-semibold text-slate-900">{project.bathrooms}</p>
                   </div>
                 )}
               </div>
             </div>
 
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            {project.location_map && (
+              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-4">Location</h3>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="flex items-center gap-3">
+                    <Globe className="w-5 h-5 text-slate-400" />
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Location Map</p>
+                      <a
+                        href={project.location_map}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-slate-900 hover:text-[#1f261e]"
+                      >
+                        View Map
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {project.location_link && (
+              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-4">Location Link</h3>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="flex items-center gap-3">
+                    <Globe className="w-5 h-5 text-slate-400" />
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Location Link</p>
+                      <a
+                        href={project.location_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-slate-900 hover:text-[#1f261e]"
+                      >
+                        View Location
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {project.developer && project.developer.website && (
+              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-4">Developer Website</h3>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <div className="flex items-center gap-3">
+                    <Globe className="w-5 h-5 text-slate-400" />
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Developer Website</p>
+                      <a
+                        href={project.developer.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-slate-900 hover:text-[#1f261e]"
+                      >
+                        Visit Website
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
               <h4 className="text-lg font-bold text-slate-900 mb-4">Get More Information</h4>
               <button className="w-full rounded-2xl bg-[#1f261e] px-6 py-3 font-semibold text-[#ede5d8] hover:bg-[#333333] transition-colors">
                 Request Info
@@ -227,7 +381,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
               >
                 Call us
               </a>
-            </div>
+            </div> */}
           </aside>
         </div>
       </section>

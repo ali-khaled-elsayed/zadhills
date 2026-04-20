@@ -101,7 +101,7 @@ class ProjectController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $project->load(['city', 'area', 'developer', 'images', 'features']),
+            'data' => $project->load(['city', 'area', 'developer', 'images']),
         ]);
     }
 
