@@ -7,7 +7,7 @@ export function apiUrl(path: string) {
 
 export async function fetchApiData<T>(path: string): Promise<T | null> {
   try {
-    const res = await fetch(apiUrl(path), { cache: 'no-store' });
+    const res = await fetch(apiUrl(path), { next: { revalidate: 60 } });
     if (!res.ok) {
       return null;
     }
@@ -22,7 +22,7 @@ export async function fetchApiData<T>(path: string): Promise<T | null> {
 
 export async function fetchApiCollection<T>(path: string): Promise<T[]> {
   try {
-    const res = await fetch(apiUrl(path), { cache: 'no-store' });
+    const res = await fetch(apiUrl(path), { next: { revalidate: 60 } });
     if (!res.ok) {
       return [];
     }
